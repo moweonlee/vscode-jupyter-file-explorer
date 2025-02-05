@@ -1,9 +1,9 @@
 {
-  "name": "jupyter-file-explorer",
+  "name": "vscode-jupyter-file-explorer",
   "displayName": "Jupyter File Explorer",
   "description": "Browse and edit files on a remote Jupyter Server.",
   "version": "0.0.2",
-  "publisher": "supdizh-1234AZ",
+  "publisher": "moweon.lee",
   "engines": {
     "vscode": "^1.60.0"
   },
