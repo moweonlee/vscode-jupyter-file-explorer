@@ -1,0 +1,133 @@
+{
+  "name": "jupyter-file-explorer",
+  "displayName": "Jupyter File Explorer",
+  "description": "Browse and edit files on a remote Jupyter Server.",
+  "version": "0.0.2",
+  "publisher": "supdizh-1234AZ",
+  "engines": {
+    "vscode": "^1.60.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "jupyter",
+    "file explorer",
+    "remote",
+    "server"
+  ],
+  "icon": "images/a_icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/supdizh/vscode-ext-jupyter-file-editor.git"
+  },
+  "license": "MIT",
+  "activationEvents": [
+    "onCommand:extension.connectJupyter"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "menus": {
+      "view/title": [
+          {
+              "command": "extension.refreshJupyterFiles",
+              "when": "view == jupyterFileExplorer",
+              "group": "navigation"
+          }
+      ],
+      "explorer/context": [
+        {
+          "command": "extension.sendToJupyter",
+          "group": "primary",
+          "label": "Send to Jupyter"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "jupyterFileExplorer.openFile",
+          "when": "view == jupyterFileExplorer && viewItem == fileItem",
+          "group": "popup"
+        },
+        {
+          "command": "jupyterFileExplorer.deleteFile",
+          "when": "view == jupyterFileExplorer && viewItem == fileItem",
+          "group": "popup"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "extension.connectJupyter",
+        "title": "Jupyter Remote: Connect to Jupyter Server"
+      },
+      {
+        "command": "extension.sendToJupyter",
+        "title": "Send to Jupyter"
+      },
+      {
+        "command": "extension.refreshJupyterFiles",
+        "title": "Refresh Jupyter Files",
+        "category": "Jupyter"
+      },
+      {
+        "command": "jupyterFileExplorer.openFile",
+        "title": "Open File",
+        "category": "File Explorer"
+      }
+      ,
+      {
+        "command": "jupyterFileExplorer.deleteFile",
+        "title": "Delete File",
+        "category": "File Explorer"
+      }
+    ],
+    "views": {
+      "explorer": [
+        {
+          "id": "jupyterFileExplorer",
+          "name": "Jupyter Files"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Jupyter File Explorer",
+      "properties": {
+        "jupyterFileExplorer.defaultServerUrl": {
+          "type": "string",
+          "default": "",
+          "description": "Default Jupyter Server URL"
+        },
+        "jupyterFileExplorer.defaultToken": {
+          "type": "string",
+          "default": "",
+          "description": "Default Jupyter Token"
+        },
+        "jupyterFileExplorer.defaultRemotePath": {
+          "type": "string",
+          "default": "./",
+          "description": "Default Remote Path"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "dependencies": {
+    "axios": "^1.4.0",
+    "form-data": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^14.14.37",
+    "@typescript-eslint/eslint-plugin": "^4.14.1",
+    "@typescript-eslint/parser": "^4.14.1",
+    "eslint": "^7.19.0",
+    "typescript": "^4.3.5",
+    "vscode": "^1.1.37"
+  }
+}
