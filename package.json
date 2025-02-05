@@ -3,7 +3,7 @@
   "displayName": "Jupyter File Explorer",
   "description": "Browse and edit files on a remote Jupyter Server.",
   "version": "0.0.2",
-  "publisher": "moweon.lee",
+  "publisher": "a287848",
   "engines": {
     "vscode": "^1.60.0"
   },
