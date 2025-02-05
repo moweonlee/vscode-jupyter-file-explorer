@@ -2,6 +2,8 @@
 
 Jupyter File Explorer is a Visual Studio Code extension that allows you to browse and edit files on a remote Jupyter Server directly from your VS Code environment.
 
+Original source code of this project came from https://github.com/supdizh/vscode-ext-jupyter-file-editor 
+
 ## Features
 
 - Connect to a remote Jupyter Server
