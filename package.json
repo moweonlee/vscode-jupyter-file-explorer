@@ -19,7 +19,7 @@
   "icon": "images/a_icon.png",
   "repository": {
     "type": "git",
-    "url": "https://github.com/supdizh/vscode-ext-jupyter-file-editor.git"
+    "url": "https://github.com/moweonlee/vscode-jupyter-file-explorer"
   },
   "license": "MIT",
   "activationEvents": [
