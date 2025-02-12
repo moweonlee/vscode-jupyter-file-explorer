@@ -2,7 +2,7 @@
   "name": "vscode-jupyter-file-explorer",
   "displayName": "Jupyter File Explorer for VSCODE",
   "description": "Browse and edit files on a remote Jupyter Server.",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "publisher": "a287848",
   "engines": {
     "vscode": "^1.60.0"
@@ -52,6 +52,11 @@
           "command": "jupyterFileExplorer.deleteFile",
           "when": "view == jupyterFileExplorer && viewItem == fileItem",
           "group": "popup"
+        }, 
+        {
+          "command": "jupyterFileExplorer.createChildDirectory",
+          "when": "view == jupyterFileExplorer && viewItem == directoryItem",
+          "group": "popup"
         }
       ]
     },
@@ -73,11 +78,15 @@
         "command": "jupyterFileExplorer.openFile",
         "title": "Open File",
         "category": "File Explorer"
-      }
-      ,
+      },
       {
         "command": "jupyterFileExplorer.deleteFile",
         "title": "Delete File",
+        "category": "File Explorer"
+      },
+      {
+        "command": "jupyterFileExplorer.createChildDirectory",
+        "title": "Create Child Directory",
         "category": "File Explorer"
       }
     ],

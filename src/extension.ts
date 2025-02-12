@@ -36,6 +36,10 @@ export async function activate(context: vscode.ExtensionContext) {
         fileExplorerProvider.deleteFile(fileItem.uri);
     });
 
+    let createDirectoryDisposable = vscode.commands.registerCommand('jupyterFileExplorer.createChildDirectory', (fileItem: FileItem) => {
+        fileExplorerProvider.createChildDirectory(fileItem.uri);
+    });
+    
     // Register the FileSystemProvider
     context.subscriptions.push(vscode.workspace.registerFileSystemProvider('jupyter-remote', fileExplorerProvider, { 
         isCaseSensitive: true
@@ -65,6 +69,7 @@ export async function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(connectDisposable);
     context.subscriptions.push(openFileDisposable);
     context.subscriptions.push(deleteFileDisposable);
+    context.subscriptions.push(createDirectoryDisposable);
     context.subscriptions.push(vscode.workspace.registerTextDocumentContentProvider('jupyter-remote', jupyterContentProvider));
     context.subscriptions.push(sendToCommand);
 

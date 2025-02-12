@@ -77,6 +77,66 @@ export class FileExplorerProvider implements vscode.TreeDataProvider<FileItem>, 
         }
     }
 
+    async createChildDirectory(filePath: string) {
+        if (!this.axiosInstance) {
+            vscode.window.showErrorMessage('Not connected to Jupyter Server.');
+            return;
+        }
+
+        const subdirectoryName = await vscode.window.showInputBox({
+            prompt: 'Enter the name of the new subdirectory',
+            placeHolder: 'Subdirectory name'
+        });
+
+        if (!subdirectoryName) {
+            vscode.window.showInformationMessage('Subdirectory creation cancelled.');
+            return;
+        }
+        const checkDirectoryPath = `${filePath}/${subdirectoryName}`;
+        const checkApiUrl = `api/contents/${checkDirectoryPath}`;
+
+        try {
+            const checkResponse = await this.axiosInstance.get(checkApiUrl);
+            if (checkResponse.status === 200) {
+            vscode.window.showErrorMessage(`Subdirectory ${subdirectoryName} already exists.`);
+            return;
+            }
+        } catch (error) {
+            if (axios.isAxiosError(error) && error.response && error.response.status !== 404) {
+            let errorMessage = 'Failed to check subdirectory existence on Jupyter Server.';
+            errorMessage += ` Error: ${error.message}`;
+            if (error.response) {
+                errorMessage += ` Status: ${error.response.status}`;
+                errorMessage += ` Data: ${JSON.stringify(error.response.data)}`;
+            }
+            vscode.window.showErrorMessage(errorMessage);
+            return;
+            }
+        }
+        const newDirectoryPath = `${filePath}/${subdirectoryName}`;
+
+        try {
+            const apiUrl = `api/contents/${newDirectoryPath}`;
+            await this.axiosInstance.put(apiUrl, {
+                type: 'directory'
+            });
+            vscode.window.showInformationMessage(`Subdirectory ${subdirectoryName} created successfully.`);
+            this.refresh();
+        } catch (error) {
+            let errorMessage = 'Failed to create subdirectory on Jupyter Server.';
+            if (axios.isAxiosError(error)) {
+                errorMessage += ` Error: ${error.message}`;
+                if (error.response) {
+                    errorMessage += ` Status: ${error.response.status}`;
+                    errorMessage += ` Data: ${JSON.stringify(error.response.data)}`;
+                }
+            } else {
+                errorMessage += ` ${error}`;
+            }
+            vscode.window.showErrorMessage(errorMessage);
+        }
+    }
+
     async deleteFile(filePath: string) {
         if (!this.axiosInstance) {
             vscode.window.showErrorMessage('Not connected to Jupyter Server.');
@@ -320,6 +380,9 @@ export class FileItem extends vscode.TreeItem {
             };
             */
             this.contextValue = 'fileItem'; // 컨텍스트 값 추가
+        }
+        else{
+            this.contextValue = 'directoryItem'; // 컨텍스트 값 추가
         }
     }
 }
